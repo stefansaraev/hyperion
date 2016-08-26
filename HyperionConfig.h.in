@@ -1,0 +1,10 @@
+// Generated config file
+
+// Define to enable the framebuffer grabber
+#cmakedefine ENABLE_FB
+
+// Define to enable the amlogic grabber
+#cmakedefine ENABLE_AMLOGIC
+
+// the hyperion build id string
+#define HYPERION_VERSION_ID "${HYPERION_VERSION_ID}"
