@@ -53,7 +53,6 @@ add_library(hyperion
 qt5_use_modules(hyperion Widgets)
 
 target_link_libraries(hyperion
-	blackborder
 	hyperion-utils
 	leddevice
 	serialport

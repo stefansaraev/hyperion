@@ -2,16 +2,11 @@
 #include <hyperion/ImageProcessor.h>
 #include <hyperion/ImageToLedsMap.h>
 
-// Blacborder includes
-#include <blackborder/BlackBorderProcessor.h>
-
 using namespace hyperion;
 
-//ImageProcessor::ImageProcessor(const LedString& ledString, bool enableBlackBorderDetector, uint8_t blackborderThreshold) :
-ImageProcessor::ImageProcessor(const LedString& ledString, const Json::Value & blackborderConfig) :
+//ImageProcessor::ImageProcessor(const LedString& ledString) :
+ImageProcessor::ImageProcessor(const LedString& ledString) :
 	_ledString(ledString),
-	_enableBlackBorderRemoval(blackborderConfig.get("enable", true).asBool()),
-	_borderProcessor(new BlackBorderProcessor(blackborderConfig) ),
 	_imageToLeds(nullptr)
 {
 	// empty
@@ -20,7 +15,6 @@ ImageProcessor::ImageProcessor(const LedString& ledString, const Json::Value & b
 ImageProcessor::~ImageProcessor()
 {
 	delete _imageToLeds;
-	delete _borderProcessor;
 }
 
 unsigned ImageProcessor::getLedCount() const
@@ -41,11 +35,6 @@ void ImageProcessor::setSize(const unsigned width, const unsigned height)
 
 	// Construct a new buffer and mapping
 	_imageToLeds = new ImageToLedsMap(width, height, 0, 0, _ledString.leds());
-}
-
-void ImageProcessor::enableBalckBorderDetector(bool enable)
-{
-	_enableBlackBorderRemoval = enable;
 }
 
 bool ImageProcessor::getScanParameters(size_t led, double &hscanBegin, double &hscanEnd, double &vscanBegin, double &vscanEnd) const

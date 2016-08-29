@@ -9,13 +9,12 @@ ImageProcessorFactory& ImageProcessorFactory::getInstance()
 	return instance;
 }
 
-void ImageProcessorFactory::init(const LedString& ledString, const Json::Value & blackborderConfig)
+void ImageProcessorFactory::init(const LedString& ledString)
 {
 	_ledString = ledString;
-	_blackborderConfig = blackborderConfig;
 }
 
 ImageProcessor* ImageProcessorFactory::newImageProcessor() const
 {
-	return new ImageProcessor(_ledString, _blackborderConfig);
+	return new ImageProcessor(_ledString);
 }

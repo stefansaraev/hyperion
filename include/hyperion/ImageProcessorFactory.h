@@ -30,10 +30,8 @@ public:
 	/// Initialises this factory with the given led-configuration
 	///
 	/// @param[in] ledString  The led configuration
-	/// @param[in] enableBlackBorderDetector Flag indicating if the blacborder detector should be enabled
-	/// @param[in] blackborderThreshold The threshold which the blackborder detector should use
 	///
-	void init(const LedString& ledString, const Json::Value &blackborderConfig);
+	void init(const LedString& ledString);
 
 	///
 	/// Creates a new ImageProcessor. The onwership of the processor is transferred to the caller.
@@ -45,7 +43,4 @@ public:
 private:
 	/// The Led-string specification
 	LedString _ledString;
-
-	// Reference to the blackborder json configuration values
-	Json::Value _blackborderConfig;
 };

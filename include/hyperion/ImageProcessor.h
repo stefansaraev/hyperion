@@ -9,9 +9,6 @@
 #include <hyperion/LedString.h>
 #include <hyperion/ImageToLedsMap.h>
 
-// Black border includes
-#include <blackborder/BlackBorderProcessor.h>
-
 ///
 /// The ImageProcessor translates an RGB-image to RGB-values for the leds. The processing is
 /// performed in two steps. First the average color per led-region is computed. Second a
@@ -37,9 +34,6 @@ public:
 	///
 	void setSize(const unsigned width, const unsigned height);
 
-	/// Enable or disable the black border detector
-	void enableBalckBorderDetector(bool enable);
-
 	///
 	/// Processes the image to a list of led colors. This will update the size of the buffer-image
 	/// if required and call the image-to-leds mapping to determine the mean color per led.
@@ -53,9 +47,6 @@ public:
 	{
 		// Ensure that the buffer-image is the proper size
 		setSize(image.width(), image.height());
-
-		// Check black border detection
-		verifyBorder(image);
 
 		// Create a result vector and call the 'in place' functionl
 		std::vector<ColorRgb> colors = _imageToLeds->getMeanLedColor(image);
@@ -75,9 +66,6 @@ public:
 	{
 		// Ensure that the buffer-image is the proper size
 		setSize(image.width(), image.height());
-
-		// Check black border detection
-		verifyBorder(image);
 
 		// Determine the mean-colors of each led (using the existing mapping)
 		_imageToLeds->getMeanLedColor(image, ledColors);
@@ -103,52 +91,12 @@ private:
 	/// given led-string specification
 	///
 	/// @param[in] ledString  The led-string specification
-	/// @param[in] enableBlackBorderDetector Flag indicating if the blacborder detector should be enabled
-	/// @param[in] blackborderThreshold The threshold which the blackborder detector should use
 	///
-	ImageProcessor(const LedString &ledString, const Json::Value &blackborderConfig);
-
-	///
-	/// Performs black-border detection (if enabled) on the given image
-	///
-	/// @param[in] image  The image to perform black-border detection on
-	///
-	template <typename Pixel_T>
-	void verifyBorder(const Image<Pixel_T> & image)
-	{
-		if(_enableBlackBorderRemoval && _borderProcessor->process(image))
-		{
-			std::cout << "BORDER SWITCH REQUIRED!!" << std::endl;
-
-			const hyperion::BlackBorder border = _borderProcessor->getCurrentBorder();
-
-			// Clean up the old mapping
-			delete _imageToLeds;
-
-			if (border.unknown)
-			{
-				// Construct a new buffer and mapping
-				_imageToLeds = new hyperion::ImageToLedsMap(image.width(), image.height(), 0, 0, _ledString.leds());
-			}
-			else
-			{
-				// Construct a new buffer and mapping
-				_imageToLeds = new hyperion::ImageToLedsMap(image.width(), image.height(), border.horizontalSize, border.verticalSize, _ledString.leds());
-			}
-
-			std::cout << "CURRENT BORDER TYPE: unknown=" << border.unknown << " hor.size=" << border.horizontalSize << " vert.size=" << border.verticalSize << std::endl;
-		}
-	}
+	ImageProcessor(const LedString &ledString);
 
 private:
 	/// The Led-string specification
 	const LedString _ledString;
-
-	/// Flag the enables(true)/disabled(false) blackborder detector
-	bool _enableBlackBorderRemoval;
-
-	/// The processor for black border detection
-	hyperion::BlackBorderProcessor * _borderProcessor;
 
 	/// The mapping of image-pixels to leds
 	hyperion::ImageToLedsMap* _imageToLeds;
