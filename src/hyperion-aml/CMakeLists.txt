@@ -19,13 +19,12 @@ set(Hyperion_AML_HEADERS
 )
 
 set(Hyperion_AML_SOURCES
-	hyperion-aml.cpp
 	AmlogicWrapper.cpp
 )
 
 QT5_WRAP_CPP(Hyperion_AML_HEADERS_MOC ${Hyperion_AML_QT_HEADERS})
 
-add_executable(${PROJECT_NAME}
+add_library(${PROJECT_NAME}
 	${Hyperion_AML_HEADERS}
 	${Hyperion_AML_SOURCES}
 	${Hyperion_AML_HEADERS_MOC}

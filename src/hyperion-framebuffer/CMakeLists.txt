@@ -19,13 +19,12 @@ set(Hyperion_FB_HEADERS
 )
 
 set(Hyperion_FB_SOURCES
-	hyperion-framebuffer.cpp
 	FramebufferWrapper.cpp
 )
 
 QT5_WRAP_CPP(Hyperion_FB_HEADERS_MOC ${Hyperion_FB_QT_HEADERS})
 
-add_executable( ${PROJECT_NAME}
+add_library( ${PROJECT_NAME}
 	${Hyperion_FB_HEADERS}
 	${Hyperion_FB_SOURCES}
 	${Hyperion_FB_HEADERS_MOC}
