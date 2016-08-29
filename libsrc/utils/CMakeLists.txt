@@ -25,17 +25,6 @@ add_library(hyperion-utils
 	${CURRENT_HEADER_DIR}/ImageResampler.h
 	${CURRENT_SOURCE_DIR}/ImageResampler.cpp
 
-	${CURRENT_HEADER_DIR}/HsvTransform.h
-	${CURRENT_SOURCE_DIR}/HsvTransform.cpp
-	${CURRENT_HEADER_DIR}/HslTransform.h
-	${CURRENT_SOURCE_DIR}/HslTransform.cpp
-	${CURRENT_HEADER_DIR}/RgbChannelTransform.h
-	${CURRENT_SOURCE_DIR}/RgbChannelTransform.cpp
-	${CURRENT_HEADER_DIR}/RgbChannelCorrection.h
-	${CURRENT_SOURCE_DIR}/RgbChannelCorrection.cpp
-	${CURRENT_HEADER_DIR}/RgbChannelAdjustment.h
-	${CURRENT_SOURCE_DIR}/RgbChannelAdjustment.cpp
-
 	${CURRENT_HEADER_DIR}/RgbToRgbw.h
 	${CURRENT_SOURCE_DIR}/RgbToRgbw.cpp
 
