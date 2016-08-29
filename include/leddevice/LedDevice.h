@@ -5,8 +5,6 @@
 
 // Utility includes
 #include <utils/ColorRgb.h>
-#include <utils/ColorRgbw.h>
-#include <utils/RgbToRgbw.h>
 
 ///
 /// Interface (pure virtual base class) for LedDevices.
