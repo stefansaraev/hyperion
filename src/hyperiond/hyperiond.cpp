@@ -10,9 +10,6 @@
 #include <QLocale>
 #include <QFile>
 
-// getoptPlusPLus includes
-#include <getoptPlusPlus/getoptpp.h>
-
 // config includes
 #include "HyperionConfig.h"
 
@@ -36,10 +33,6 @@
 
 #include <sys/prctl.h> 
 #include <utils/Logger.h>
-
-using namespace vlofgren;
-
-using namespace vlofgren;
 
 void signal_handler(const int signum)
 {
@@ -181,35 +174,15 @@ int main(int argc, char** argv)
 	setlocale(LC_ALL, "C");
 	QLocale::setDefault(QLocale::c());
 
-	OptionsParser optionParser("Hyperion Daemon");
-	ParameterSet & parameters = optionParser.getParameters();
-
-	IntParameter           & argParentPid             = parameters.add<IntParameter>          (0x0, "parent",        "pid of parent hyperiond");
-	SwitchParameter<>      & argHelp                  = parameters.add<SwitchParameter<>>     ('h', "help",          "Show this help message and exit");
-
-	argParentPid.setDefault(0);
-	optionParser.parse(argc, const_cast<const char **>(argv));
-	const std::vector<std::string> configFiles = optionParser.getFiles();
-
-	// check if we need to display the usage. exit if we do.
-	if (argHelp.isSet())
-	{
-		optionParser.usage();
-		return 0;
-	}
+	std::vector<std::string> configFiles;
+	for(int i = 1; i < argc; i++)
+		configFiles.push_back(argv[i]);
 
 	if (configFiles.size() == 0)
 	{
 		std::cout << "ERROR: Missing required configuration file. Usage:" << std::endl;
 		std::cout << "hyperiond <options ...> [config.file ...]" << std::endl;
 		return 1;
-	}
-
-	
-	if (argParentPid.getValue() > 0 )
-	{
-		std::cout << "hyperiond client, parent is pid " << argParentPid.getValue() << std::endl;
-		prctl(PR_SET_PDEATHSIG, SIGHUP);
 	}
 
 	int argvId = -1;
