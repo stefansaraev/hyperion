@@ -15,7 +15,7 @@
 		"smoothing" :
 		{
 			"type"             : "linear",
-			"time_ms"          : 200,
+			"time_ms"          : 100,
 			"updateFrequency"  : 20.0000,
 			"updateDelay"      : 0,
 			"continuousOutput" : true
@@ -46,8 +46,8 @@
 		"grabPictures"      : true,
 		"grabAudio"         : true,
 		"grabMenu"          : false,
-		"grabPause"         : false,
-		"grabScreensaver"   : true,
+		"grabPause"         : true,
+		"grabScreensaver"   : false,
 		"enable3DDetection" : true
 	},
 
