@@ -68,17 +68,6 @@ Json::Value loadConfig(const std::string & configFile)
 }
 
 
-void startNewHyperion(int parentPid, std::string hyperionFile, std::string configFile)
-{
-	if ( fork() == 0 )
-	{
-		sleep(3);
-		execl(hyperionFile.c_str(), hyperionFile.c_str(), "--parent", QString::number(parentPid).toStdString().c_str(), configFile.c_str(), NULL);
-		exit(0);
-	}
-}
-
-
 // create XBMC video checker if the configuration is present
 void startXBMCVideoChecker(const Json::Value &config, XBMCVideoChecker* &xbmcVideoChecker)
 {
@@ -181,7 +170,7 @@ int main(int argc, char** argv)
 	if (configFiles.size() == 0)
 	{
 		std::cout << "ERROR: Missing required configuration file. Usage:" << std::endl;
-		std::cout << "hyperiond <options ...> [config.file ...]" << std::endl;
+		std::cout << "hyperiond <options ...> [config.file]" << std::endl;
 		return 1;
 	}
 
@@ -190,7 +179,6 @@ int main(int argc, char** argv)
 		if ( QFile::exists(configFiles[idx].c_str()))
 		{
 			if (argvId < 0) argvId=idx;
-			else startNewHyperion(getpid(), argv[0], configFiles[idx].c_str());
 		}
 	}
 

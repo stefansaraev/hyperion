@@ -133,15 +133,6 @@ public:
 	static LedString createLedString(const Json::Value & ledsConfig, const ColorOrder deviceOrder);
 
 	static LedDevice * createColorSmoothing(const Json::Value & smoothingConfig, LedDevice * ledDevice);
-	
-signals:
-	/// Signal which is emitted when a priority channel is actively cleared
-	/// This signal will not be emitted when a priority channel time out
-	void channelCleared(int priority);
-
-	/// Signal which is emitted when all priority channels are actively cleared
-	/// This signal will not be emitted when a priority channel time out
-	void allChannelsCleared();
 
 private slots:
 	///
